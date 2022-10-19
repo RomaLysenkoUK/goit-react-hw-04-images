@@ -95,7 +95,7 @@ export const Gallery = ({ searchQuery, onUpdate }) => {
   );
 };
 
-// Gallery.propTypes = {
-//   searchQuery: PropTypes.string.isRequired,
-//   onUpdate: PropTypes.func.isRequired,
-// };
+Gallery.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+};
