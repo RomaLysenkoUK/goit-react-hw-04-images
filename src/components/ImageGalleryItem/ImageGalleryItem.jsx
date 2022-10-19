@@ -4,13 +4,12 @@ import s from './ImageGalleryItem.module.css';
 
 export const GalleryItem = ({
   openModal,
-  id,
   webformatURL,
   tags,
   largeImageURL,
 }) => {
   return (
-    <li key={id} className={s.itemGallery}>
+    <li className={s.itemGallery}>
       <a
         href="#"
         onClick={() => {
@@ -25,6 +24,5 @@ export const GalleryItem = ({
 };
 
 GalleryItem.propTypes = {
-  gallery: PropTypes.array.isRequired,
   openModal: PropTypes.func.isRequired,
 };
