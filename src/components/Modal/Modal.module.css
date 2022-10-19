@@ -1,0 +1,22 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(29, 22, 22, 0.89);
+
+
+
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    /* width: 600px;
+    height: 500px; */
+    margin: 0 auto;
+
+}
