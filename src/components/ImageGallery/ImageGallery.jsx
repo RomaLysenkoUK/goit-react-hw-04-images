@@ -8,45 +8,42 @@ import ThreeDots from '../Loader/Loader';
 import s from './ImageGallery.module.css';
 import { useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const Gallery = ({ searchQuery, onUpdate }) => {
+export const Gallery = ({ searchQuery }) => {
   const [gallery, setGallery] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [currentImage, setCurrentImage] = useState(null);
   const ref = useRef(null);
-
-  // const prevQuery = prevProps.searchQuery;
-  // const nextQuery = this.props.searchQuery;
-  // const prevPage = prevState.page;
-  // const nextPage = this.state.page;
+  const refPage = useRef(null);
 
   const notify = () => {
     toast.warn('Did not find anything! Please change the request.');
   };
+
   useEffect(() => {
     const fetchData = async () => {
-      console.log(ref);
-      console.log(searchQuery);
       try {
         setIsLoading(true);
-        setError('');
+        setError(null);
+        let pictureData;
 
         if (searchQuery !== '' && ref.current !== searchQuery) {
-          const pictureData = await axiosPicture(searchQuery);
+          pictureData = await axiosPicture(searchQuery);
           setPage(1);
           setGallery(pictureData);
           ref.current = searchQuery;
-          if (!isLoading && gallery.length === 0) {
-            notify();
-          }
-          return;
         }
-        if (page > 1) {
-          const pictureData = await axiosPicture(searchQuery, page);
-          setGallery(gallery => [...gallery, ...pictureData]);
-          return onUpdate(pictureData, isLoading, error);
+
+        if (page !== 1 && page !== refPage.current) {
+          const pictureDataNextPage = await axiosPicture(searchQuery, page);
+          setGallery(prevgallery => [...prevgallery, ...pictureDataNextPage]);
+          refPage.current = page;
+        }
+        if (pictureData?.length === 0) {
+          notify();
         }
       } catch (err) {
         setError(err.message);
@@ -79,8 +76,8 @@ export const Gallery = ({ searchQuery, onUpdate }) => {
         {!!gallery.length &&
           gallery.map(item => (
             <GalleryItem
-              key={item.id}
               {...item}
+              key={item.id}
               openModal={updateCurrentImage}
             />
           ))}
@@ -97,5 +94,4 @@ export const Gallery = ({ searchQuery, onUpdate }) => {
 
 Gallery.propTypes = {
   searchQuery: PropTypes.string.isRequired,
-  onUpdate: PropTypes.func.isRequired,
 };

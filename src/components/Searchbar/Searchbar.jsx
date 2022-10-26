@@ -1,12 +1,10 @@
-// import React from 'react';
+import React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { BsSearch } from 'react-icons/bs';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import s from './Searchbar.module.css';
 
-export const Searchbar = ({ onSubmit, isLoading, error, gallery }) => {
+export const Searchbar = ({ onSubmit }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleNameChange = event => {
@@ -24,13 +22,10 @@ export const Searchbar = ({ onSubmit, isLoading, error, gallery }) => {
     setSearchQuery('');
   };
 
-  const notify = () =>
-    toast.warn('Did not find anything! Please change the request.');
-
   return (
     <header className="searchbar">
       <form className={s.form} onSubmit={handleSubmit}>
-        <button type="submit" className={s.submit} onClick={notify}>
+        <button type="submit" className={s.submit}>
           <BsSearch />
         </button>
         <input
@@ -43,14 +38,10 @@ export const Searchbar = ({ onSubmit, isLoading, error, gallery }) => {
           value={searchQuery}
         />
       </form>
-      {isLoading && !error && gallery.length < 1 && <ToastContainer />}
     </header>
   );
 };
 
 Searchbar.propTypes = {
-  gallery: PropTypes.array.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
 };

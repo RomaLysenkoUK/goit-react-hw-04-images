@@ -4,6 +4,7 @@ import s from './ImageGalleryItem.module.css';
 
 export const GalleryItem = ({
   openModal,
+
   webformatURL,
   tags,
   largeImageURL,
